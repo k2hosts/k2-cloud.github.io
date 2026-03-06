@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>K2 Cloud — Performance at the Summit</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2307090e'/%3E%3Cpath d='M16 4L28 26H4Z' fill='none' stroke='%2352c5f8' stroke-width='1.5' stroke-linejoin='round'/%3E%3Cpath d='M16 4L4 26' stroke='%2352c5f8' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M11 16L16 4L21 16' fill='rgba(82,197,248,0.15)'/%3E%3Ccircle cx='16' cy='4' r='1.5' fill='%2352c5f8'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;600;700;800;900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -63,7 +64,7 @@ nav {
 @keyframes fadeDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
 
 .logo{display:flex;align-items:center;gap:11px;text-decoration:none;}
-.logo svg{width:28px;height:28px;}
+.logo svg{width:32px;height:32px;}
 .logo-text{font-size:14px;font-weight:800;letter-spacing:.28em;text-transform:uppercase;color:var(--text-hi);}
 .logo-text b{color:var(--glacier);}
 
@@ -299,9 +300,24 @@ footer{padding:48px 0 34px;border-top:1px solid var(--line);}
 <!-- NAV -->
 <nav>
   <a href="#" class="logo">
-    <svg viewBox="0 0 28 28" fill="none">
-      <path d="M14 2.5L26 23.5L14 18.5L2 23.5Z" stroke="#52c5f8" stroke-width="1.4" stroke-linejoin="round"/>
-      <path d="M14 2.5L14 18.5" stroke="rgba(82,197,248,.25)" stroke-width="1"/>
+    <!-- Mountain / K2 peak logo -->
+    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Background glow -->
+      <circle cx="16" cy="14" r="10" fill="rgba(82,197,248,0.04)"/>
+      <!-- Left mountain flank -->
+      <path d="M3 27L16 5L29 27Z" fill="rgba(9,13,20,0.9)" stroke="none"/>
+      <!-- Left ridge line — bright, main edge -->
+      <path d="M16 5L3 27" stroke="#52c5f8" stroke-width="1.5" stroke-linecap="round"/>
+      <!-- Right ridge line — dim -->
+      <path d="M16 5L29 27" stroke="rgba(82,197,248,0.22)" stroke-width="1" stroke-linecap="round"/>
+      <!-- Snow cap fill -->
+      <path d="M12 13L16 5L20 13L18 11.5L16 12.5L14 11.5Z" fill="rgba(82,197,248,0.18)"/>
+      <!-- Snow cap outline -->
+      <path d="M12 13L16 5L20 13" stroke="rgba(82,197,248,0.55)" stroke-width="1" stroke-linejoin="round" fill="none"/>
+      <!-- Peak dot -->
+      <circle cx="16" cy="5" r="1.4" fill="#52c5f8" opacity="0.9"/>
+      <!-- Base line -->
+      <line x1="3" y1="27" x2="29" y2="27" stroke="rgba(82,197,248,0.12)" stroke-width="1"/>
     </svg>
     <span class="logo-text">K2<b>Cloud</b></span>
   </a>
@@ -519,8 +535,8 @@ footer{padding:48px 0 34px;border-top:1px solid var(--line);}
 
       <div class="pc-price">
         <div class="pc-amt">
-          <span class="pc-cur">$</span>
-          <span class="pc-num">14</span>
+          <span class="pc-cur">€</span>
+          <span class="pc-num">12</span>
         </div>
         <span class="pc-period">/ month</span>
         <div class="pc-div"></div>
@@ -609,6 +625,17 @@ footer{padding:48px 0 34px;border-top:1px solid var(--line);}
 </footer>
 
 <script>
+// ═══════════════════════════════════════════════════════════════
+// VALID INVITE TOKENS
+// Add valid token strings to this array.
+// Format: "K2-XXXX-XXXX-XXXX" (without dashes in the raw string)
+// Example entry (currently disabled): "K2ABCD1234EFGH"
+// ═══════════════════════════════════════════════════════════════
+const VALID_TOKENS = [
+  // "K2XXXXXXXXXXXX",   // Example — replace or add real tokens here
+];
+// ═══════════════════════════════════════════════════════════════
+
 // Cursor
 const cur=document.getElementById('cur'),ring=document.getElementById('ring');
 let mx=0,my=0,rx=0,ry=0;
@@ -639,10 +666,25 @@ inv.addEventListener('input',e=>{
   note.textContent='// '+v.length+' / 14 chars';
   note.style.color='rgba(82,197,248,.5)';
 });
+
 function verify(){
-  if(!inv.value.trim()){note.textContent='// No token provided.';note.style.color='rgba(239,68,68,.55)';return;}
-  note.textContent='// Verifying — stand by...';note.style.color='rgba(82,197,248,.7)';
-  setTimeout(()=>{note.textContent='// Token unrecognized. Contact your referrer or the K2 team.';note.style.color='rgba(239,68,68,.5)';},1800);
+  const raw = inv.value.replace(/-/g,'').toUpperCase().trim();
+  if(!raw){
+    note.textContent='// No token provided.';
+    note.style.color='rgba(239,68,68,.55)';
+    return;
+  }
+  note.textContent='// Verifying — stand by...';
+  note.style.color='rgba(82,197,248,.7)';
+  setTimeout(()=>{
+    if(VALID_TOKENS.includes(raw)){
+      note.textContent='// Token accepted. Welcome to the summit.';
+      note.style.color='rgba(34,197,94,.75)';
+    } else {
+      note.textContent='// Token unrecognized. Contact your referrer or the K2 team.';
+      note.style.color='rgba(239,68,68,.5)';
+    }
+  },1800);
 }
 </script>
 </body>
