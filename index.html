@@ -500,7 +500,7 @@ footer{padding:44px 0 30px;border-top:1px solid var(--line);}
     <li><a href="#" onclick="openPage('infrastructure');return false;">Infrastructure</a></li>
     <li><a href="#" onclick="openPage('security');return false;">Security</a></li>
     <li><a href="#" onclick="openPage('regions');return false;">Regions</a></li>
-    <li><a href="#" onclick="openPage('docs');return false;">Docs</a></li>
+
   </ul>
   <a href="#access" class="nav-pill">Request Access</a>
 </nav>
@@ -930,74 +930,6 @@ footer{padding:44px 0 30px;border-top:1px solid var(--line);}
         <div class="badge-row"><span class="badge">Q3 · Q4</span></div>
       </div>
     </div>
-  </div>
-</div>
-
-<!-- ═══ PAGE: DOCS ═══ -->
-<div class="page-overlay" id="page-docs">
-  <div class="po-nav">
-    <button class="po-back" onclick="closePage()">
-      <svg viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="#52c5f8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Back
-    </button>
-    <span class="po-tag">// Documentation</span>
-  </div>
-  <div class="po-body">
-    <div class="po-hero">
-      <span class="s-label">// Quickstart · API · Reference</span>
-      <h1>Everything you<br>need to ship.</h1>
-      <p>Documentation written by engineers, for engineers. No fluff — just the commands and configs you need to go from invite token to running workload.</p>
-    </div>
-    <div class="po-grid">
-      <div class="po-card">
-        <svg class="po-card-ico" viewBox="0 0 40 40" fill="none"><path d="M10 8h20v24H10z" stroke="#52c5f8" stroke-width="1.3" stroke-linejoin="round"/><path d="M15 14h10M15 19h10M15 24h6" stroke="#52c5f8" stroke-width="1" stroke-linecap="round" opacity=".5"/></svg>
-        <h3>Quickstart Guide</h3>
-        <p>From invite token to a running SSH session in under 5 minutes. Covers key upload, region selection, image choice, and first boot.</p>
-        <span class="tag">~5 min</span>
-      </div>
-      <div class="po-card">
-        <svg class="po-card-ico" viewBox="0 0 40 40" fill="none"><rect x="8" y="8" width="24" height="24" rx="1" stroke="#52c5f8" stroke-width="1.3"/><path d="M14 18l4 4 8-8" stroke="#52c5f8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" opacity=".6"/></svg>
-        <h3>Control Plane API</h3>
-        <p>RESTful API with full control over nodes, volumes, snapshots, and networking. All endpoints return JSON. Authentication via Bearer token.</p>
-        <span class="tag">REST · OpenAPI 3.1</span>
-      </div>
-      <div class="po-card">
-        <svg class="po-card-ico" viewBox="0 0 40 40" fill="none"><path d="M8 28L16 12L22 22L27 16L32 28Z" stroke="#52c5f8" stroke-width="1.3" stroke-linejoin="round" fill="rgba(82,197,248,.06)"/></svg>
-        <h3>Networking Reference</h3>
-        <p>Private VLAN setup, BGP peering requests, firewall rule syntax, and IPv6 configuration. Includes worked examples for common setups.</p>
-        <span class="tag">VLAN · BGP · IPv6</span>
-      </div>
-      <div class="po-card">
-        <svg class="po-card-ico" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="12" stroke="#52c5f8" stroke-width="1.3"/><path d="M20 14v6h6" stroke="#52c5f8" stroke-width="1.3" stroke-linecap="round" opacity=".6"/></svg>
-        <h3>Changelog</h3>
-        <p>Every platform update, API version bump, and configuration change — logged chronologically. Signed release notes, no surprises.</p>
-        <span class="tag">Updated weekly</span>
-      </div>
-    </div>
-    <div class="po-code">
-<span class="c-cm"># 1. Authenticate with your invite token</span>
-<span class="c-kw">export</span> K2_TOKEN=<span class="c-str">"K2-XXXX-XXXX-XXXX"</span>
-
-<span class="c-cm"># 2. Provision a node in EU-WEST-2</span>
-curl -X POST https://api.k2.cloud/v1/nodes \
-  -H <span class="c-str">"Authorization: Bearer $K2_TOKEN"</span> \
-  -H <span class="c-str">"Content-Type: application/json"</span> \
-  -d <span class="c-str">'{"region":"eu-west-2","plan":"summit-entry","ssh_keys":["your-key-id"]}'</span>
-
-<span class="c-cm"># 3. SSH in once status == "running"  (~45 seconds)</span>
-ssh root@<span class="c-str">&lt;your-node-ip&gt;</span>
-    </div>
-    <table class="po-table">
-      <thead><tr><th>Endpoint</th><th>Methods</th><th>Description</th></tr></thead>
-      <tbody>
-        <tr><td>/v1/nodes</td><td>GET · POST</td><td>List all nodes or provision a new one</td></tr>
-        <tr><td>/v1/nodes/:id</td><td>GET · DELETE</td><td>Inspect or terminate a specific node</td></tr>
-        <tr><td>/v1/nodes/:id/reboot</td><td>POST</td><td>Hard or graceful reboot</td></tr>
-        <tr><td>/v1/volumes</td><td>GET · POST</td><td>Manage persistent volumes</td></tr>
-        <tr><td>/v1/snapshots</td><td>GET · POST</td><td>Point-in-time volume snapshots</td></tr>
-        <tr><td>/v1/keys</td><td>GET · POST · DELETE</td><td>Manage SSH public keys</td></tr>
-      </tbody>
-    </table>
   </div>
 </div>
 
