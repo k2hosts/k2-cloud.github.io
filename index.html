@@ -269,8 +269,68 @@ footer{padding:48px 0 34px;border-top:1px solid var(--line);}
 .foot-links a:hover{color:var(--glacier);}
 .foot-copy{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--text-lo);letter-spacing:.1em;}
 
+/* ═══ PAGE OVERLAY SYSTEM ═══ */
+.page-overlay{
+  position:fixed;inset:0;z-index:500;
+  background:var(--obsidian);
+  display:flex;flex-direction:column;
+  overflow-y:auto;
+  opacity:0;pointer-events:none;
+  transform:translateY(18px);
+  transition:opacity .38s ease,transform .38s ease;
+}
+.page-overlay.open{opacity:1;pointer-events:all;transform:none;}
+.po-nav{
+  position:sticky;top:0;z-index:10;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px 64px;
+  background:linear-gradient(to bottom,rgba(7,9,14,.98) 60%,transparent);
+  flex-shrink:0;
+}
+.po-back{display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;color:var(--text-lo);text-transform:uppercase;background:none;border:none;cursor:none;padding:0;transition:color .25s;}
+.po-back:hover{color:var(--glacier);}
+.po-back svg{width:16px;height:16px;transition:transform .25s;}
+.po-back:hover svg{transform:translateX(-3px);}
+.po-title{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.3em;color:var(--text-lo);text-transform:uppercase;}
+.po-body{max-width:1000px;margin:0 auto;padding:40px 60px 100px;width:100%;}
+.po-hero{margin-bottom:72px;}
+.po-hero .s-label{margin-bottom:18px;}
+.po-hero h1{font-size:clamp(36px,5vw,64px);font-weight:900;letter-spacing:-.03em;color:var(--text-hi);line-height:1.05;margin-bottom:18px;}
+.po-hero p{font-size:14px;font-weight:300;color:var(--text-mid);line-height:1.9;max-width:560px;}
+.po-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line-hi);border:1px solid var(--line-hi);margin-bottom:48px;}
+.po-card{background:var(--deep);padding:40px 36px;position:relative;overflow:hidden;transition:background .3s;}
+.po-card:hover{background:var(--charcoal);}
+.po-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--glacier),transparent);opacity:0;transition:opacity .3s;}
+.po-card:hover::after{opacity:1;}
+.po-card-ico{width:40px;height:40px;margin-bottom:22px;opacity:.55;}
+.po-card h3{font-size:14px;font-weight:700;letter-spacing:.04em;color:var(--text-hi);margin-bottom:10px;}
+.po-card p{font-size:12.5px;font-weight:300;color:var(--text-mid);line-height:1.8;}
+.po-card .tag{display:inline-block;margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--glacier);border:1px solid rgba(82,197,248,.2);padding:4px 10px;}
+.po-table{width:100%;border-collapse:collapse;border:1px solid var(--line-hi);margin-bottom:48px;}
+.po-table th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--glacier);padding:14px 22px;text-align:left;border-bottom:1px solid var(--line-hi);background:rgba(82,197,248,.03);}
+.po-table td{font-size:12.5px;font-weight:300;color:var(--text-mid);padding:14px 22px;border-bottom:1px solid var(--line);vertical-align:top;}
+.po-table tr:last-child td{border-bottom:none;}
+.po-table tr:hover td{background:rgba(82,197,248,.02);color:var(--text-hi);}
+.po-table td:first-child{font-weight:600;color:var(--text-hi);font-size:12px;}
+.po-divider{border:none;border-top:1px solid var(--line);margin:52px 0;}
+.po-3col{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-hi);border:1px solid var(--line-hi);margin-bottom:48px;}
+.po-stat{background:var(--deep);padding:32px 28px;}
+.po-stat .val{font-size:32px;font-weight:900;letter-spacing:-.03em;color:var(--text-hi);line-height:1;margin-bottom:4px;}
+.po-stat .val em{font-style:normal;font-size:14px;color:var(--glacier);margin-left:2px;}
+.po-stat .key{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-lo);}
+.po-code{background:var(--deep);border:1px solid var(--line-hi);padding:28px 32px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-mid);line-height:1.9;margin-bottom:48px;position:relative;overflow-x:auto;}
+.po-code .c-kw{color:#52c5f8;} .po-code .c-str{color:#85d8fb;opacity:.75;} .po-code .c-cm{color:var(--text-lo);}
+.badge-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;}
+.badge{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;padding:6px 14px;border:1px solid var(--line-hi);color:var(--text-lo);}
+.badge.on{border-color:rgba(82,197,248,.3);color:var(--glacier);background:rgba(82,197,248,.04);}
+
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:860px){
+  .po-grid{grid-template-columns:1fr;}
+  .po-3col{grid-template-columns:1fr 1fr;}
+  .po-nav{padding:18px 24px;}
+  .po-body{padding:30px 24px 80px;}
+  .po-table{display:block;overflow-x:auto;}
   nav{padding:22px 24px;}
   .nav-links{display:none;}
   .wrap{padding:0 24px;}
@@ -322,10 +382,10 @@ footer{padding:48px 0 34px;border-top:1px solid var(--line);}
     <span class="logo-text">K2<b>Cloud</b></span>
   </a>
   <ul class="nav-links">
-    <li><a href="#">Infrastructure</a></li>
-    <li><a href="#">Security</a></li>
-    <li><a href="#">Regions</a></li>
-    <li><a href="#">Docs</a></li>
+    <li><a href="#" onclick="openPage('infrastructure');return false;">Infrastructure</a></li>
+    <li><a href="#" onclick="openPage('security');return false;">Security</a></li>
+    <li><a href="#" onclick="openPage('regions');return false;">Regions</a></li>
+    <li><a href="#" onclick="openPage('docs');return false;">Docs</a></li>
   </ul>
   <a href="#access" class="nav-pill">Request Access</a>
 </nav>
@@ -610,6 +670,259 @@ footer{padding:48px 0 34px;border-top:1px solid var(--line);}
   </div>
 </section>
 
+<!-- ═══ PAGE: INFRASTRUCTURE ═══ -->
+<div class="page-overlay" id="page-infrastructure">
+  <div class="po-nav">
+    <button class="po-back" onclick="closePage()">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="#52c5f8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back
+    </button>
+    <span class="po-title">// Infrastructure</span>
+  </div>
+  <div class="po-body">
+    <div class="po-hero">
+      <span class="s-label">// Compute · Storage · Network</span>
+      <h1>Raw metal.<br>Zero abstraction.</h1>
+      <p>Every K2 node is a dedicated physical server. No shared CPU pools, no noisy neighbours, no hypervisor tax. You get the machine — all of it.</p>
+    </div>
+
+    <div class="po-3col">
+      <div class="po-stat"><div class="val">AMD<em>EPYC</em></div><div class="key">9004 Series · Genoa</div></div>
+      <div class="po-stat"><div class="val">&lt;100<em>μs</em></div><div class="key">NVMe-oF Storage Latency</div></div>
+      <div class="po-stat"><div class="val">25<em>Gbps</em></div><div class="key">Per-Node Uplink</div></div>
+    </div>
+
+    <div class="po-grid">
+      <div class="po-card">
+        <svg class="po-card-ico" viewBox="0 0 40 40" fill="none"><rect x="4" y="10" width="32" height="20" rx="1" stroke="#52c5f8" stroke-width="1.3"/><path d="M10 18h20M10 24h12" stroke="#52c5f8" stroke-width="1" stroke-linecap="round" opacity=".45"/><circle cx="30" cy="24" r="2.5" fill="rgba(82,197,248,.2)" stroke="#52c5f8" stroke-width="1"/></svg>
+        <h3>Bare-Metal Compute</h3>
+        <p>AMD EPYC 9654 (96-core) or 9354P (32-core) nodes, exclusively allocated per account. No vCPU time-sharing — every cycle is yours.</p>
+        <span class="tag">Dedicated Silicon</span>
+      </div>
+      <div class="po-card">
+        <svg class="po-card-ico" viewBox="0 0 40 40" fill="none"><ellipse cx="20" cy="14" rx="13" ry="5" stroke="#52c5f8" stroke-width="1.3"/><path d="M7 14v12c0 2.76 5.82 5 13 5s13-2.24 13-5V14" stroke="#52c5f8" stroke-width="1.3"/><path d="M7 20c0 2.76 5.82 5 13 5s13-2.24 13-5" stroke="#52c5f8" stroke-width="1" opacity=".4"/></svg>
+        <h3>NVMe-oF Storage</h3>
+        <p>All-NVMe storage fabric over RDMA. Sub-100μs access latency from any node in the cluster. No spinning disks, anywhere.</p>
+        <span class="tag">NVMe / RDMA</span>
+      </div>
+      <div class="po-card">
+        <svg class="po-card-ico" viewBox="0 0 40 40" fill="none"><path d="M4 20 Q10 10 20 20 Q30 30 36 20" stroke="#52c5f8" stroke-width="1.3" stroke-linecap="round" fill="none"/><circle cx="4" cy="20" r="2" fill="#52c5f8" opacity=".5"/><circle cx="36" cy="20" r="2" fill="#52c5f8" opacity=".5"/></svg>
+        <h3>Dedicated Fiber Uplinks</h3>
+        <p>Each node connects via dedicated dark fiber to our Tier 1 transit providers. 25 Gbps burst capacity. Private BGP peering available.</p>
+        <span class="tag">25 Gbps · BGP</span>
+      </div>
+      <div class="po-card">
+        <svg class="po-card-ico" viewBox="0 0 40 40" fill="none"><rect x="8" y="8" width="10" height="10" rx="1" stroke="#52c5f8" stroke-width="1.3"/><rect x="22" y="8" width="10" height="10" rx="1" stroke="#52c5f8" stroke-width="1.3"/><rect x="8" y="22" width="10" height="10" rx="1" stroke="#52c5f8" stroke-width="1.3"/><rect x="22" y="22" width="10" height="10" rx="1" stroke="rgba(82,197,248,.4)" stroke-width="1.3"/><line x1="18" y1="13" x2="22" y2="13" stroke="rgba(82,197,248,.3)" stroke-width="1"/><line x1="13" y1="18" x2="13" y2="22" stroke="rgba(82,197,248,.3)" stroke-width="1"/></svg>
+        <h3>Out-of-Band Management</h3>
+        <p>Every chassis ships with an independent IPMI/BMC interface on a separate management network. Full console access, hardware-level reboot, and KVM-over-IP.</p>
+        <span class="tag">IPMI · BMC · KVM</span>
+      </div>
+    </div>
+
+    <table class="po-table">
+      <thead><tr><th>Component</th><th>Spec</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>CPU</td><td>AMD EPYC 9654 / 9354P</td><td>Zen 4, up to 96 cores, 192 threads per node</td></tr>
+        <tr><td>Memory</td><td>Up to 1.5 TB DDR5-4800</td><td>12-channel, ECC registered, per node</td></tr>
+        <tr><td>Primary Storage</td><td>NVMe U.2 / E1.S</td><td>Up to 64 TB raw per chassis via NVMe-oF fabric</td></tr>
+        <tr><td>Network</td><td>25 GbE (uplink) + 100 GbE (storage fabric)</td><td>Mellanox ConnectX-7 NICs</td></tr>
+        <tr><td>Power</td><td>Dual redundant 3000W PSU</td><td>N+1 redundancy, 240V feed, independent UPS</td></tr>
+        <tr><td>Management</td><td>IPMI 2.0 / Redfish API</td><td>Out-of-band, hardware attestation on every boot</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ PAGE: SECURITY ═══ -->
+<div class="page-overlay" id="page-security">
+  <div class="po-nav">
+    <button class="po-back" onclick="closePage()">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="#52c5f8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back
+    </button>
+    <span class="po-title">// Security</span>
+  </div>
+  <div class="po-body">
+    <div class="po-hero">
+      <span class="s-label">// Compliance · Access · Network</span>
+      <h1>Secure by<br>default.</h1>
+      <p>Security isn't a feature you enable — it's the foundation everything is built on. Zero-trust networking, hardware attestation, and SOC 2 Type II from day one.</p>
+    </div>
+
+    <div class="po-3col">
+      <div class="po-stat"><div class="val">SOC<em>2</em></div><div class="key">Type II Certified</div></div>
+      <div class="po-stat"><div class="val">0<em>shared</em></div><div class="key">Hardware Per Account</div></div>
+      <div class="po-stat"><div class="val">AES<em>256</em></div><div class="key">Storage Encryption at Rest</div></div>
+    </div>
+
+    <div class="po-grid">
+      <div class="po-card">
+        <svg class="po-card-ico" viewBox="0 0 40 40" fill="none"><rect x="8" y="18" width="24" height="16" rx="1" stroke="#52c5f8" stroke-width="1.3"/><path d="M13 18V13C13 9.69 16 8 20 8C24 8 27 9.69 27 13V18" stroke="#52c5f8" stroke-width="1.3" stroke-linecap="round"/><circle cx="20" cy="27" r="3" fill="rgba(82,197,248,.15)" stroke="#52c5f8" stroke-width="1"/></svg>
+        <h3>Zero-Trust Networking</h3>
+        <p>Every connection requires mutual TLS. No implicit trust between nodes — all lateral traffic is authenticated and encrypted regardless of network segment.</p>
+        <span class="tag">mTLS · Zero Trust</span>
+      </div>
+      <div class="po-card">
+        <svg class="po-card-ico" viewBox="0 0 40 40" fill="none"><path d="M20 6L33 12V22C33 29 27 35 20 37C13 35 7 29 7 22V12Z" stroke="#52c5f8" stroke-width="1.3" stroke-linejoin="round"/><path d="M14 20L18 24L26 16" stroke="#52c5f8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/></svg>
+        <h3>Hardware Attestation</h3>
+        <p>TPM 2.0 chips on every chassis verify firmware and bootloader integrity before the OS loads. Any tampering halts the boot sequence and pages on-call.</p>
+        <span class="tag">TPM 2.0 · Secure Boot</span>
+      </div>
+      <div class="po-card">
+        <svg class="po-card-ico" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="13" stroke="#52c5f8" stroke-width="1.3"/><path d="M20 12v8l5 3" stroke="#52c5f8" stroke-width="1.3" stroke-linecap="round" opacity=".6"/><circle cx="20" cy="20" r="3" fill="rgba(82,197,248,.2)"/></svg>
+        <h3>Automated Key Rotation</h3>
+        <p>SSH host keys, TLS certificates, and API tokens rotate on a configurable schedule. Expired credentials are revoked immediately with no manual intervention required.</p>
+        <span class="tag">Auto-Rotation · RBAC</span>
+      </div>
+      <div class="po-card">
+        <svg class="po-card-ico" viewBox="0 0 40 40" fill="none"><path d="M6 20 Q10 14 20 20 Q30 26 34 20" stroke="#52c5f8" stroke-width="1.3" stroke-linecap="round" fill="none"/><rect x="14" y="14" width="12" height="12" rx="1" stroke="rgba(82,197,248,.35)" stroke-width="1" fill="rgba(82,197,248,.04)"/></svg>
+        <h3>DDoS Mitigation</h3>
+        <p>Always-on scrubbing at the network edge. Traffic is inspected and cleaned before it reaches your node — no configuration, no thresholds to tune.</p>
+        <span class="tag">Always-On · Edge</span>
+      </div>
+    </div>
+
+    <table class="po-table">
+      <thead><tr><th>Control</th><th>Standard</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>SOC 2 Type II</td><td>AICPA TSC 2017</td><td>Certified — annual audit</td></tr>
+        <tr><td>Data Encryption at Rest</td><td>AES-256-XTS</td><td>Enabled by default on all volumes</td></tr>
+        <tr><td>Data Encryption in Transit</td><td>TLS 1.3 / mTLS</td><td>Enforced — TLS 1.2 and below rejected</td></tr>
+        <tr><td>Vulnerability Scanning</td><td>CVE / NVD</td><td>Continuous — patched within 24h for critical CVEs</td></tr>
+        <tr><td>Penetration Testing</td><td>PTES</td><td>Bi-annual third-party assessment</td></tr>
+        <tr><td>Access Logs</td><td>Immutable audit trail</td><td>Retained 365 days, tamper-evident</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ PAGE: REGIONS ═══ -->
+<div class="page-overlay" id="page-regions">
+  <div class="po-nav">
+    <button class="po-back" onclick="closePage()">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="#52c5f8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back
+    </button>
+    <span class="po-title">// Regions</span>
+  </div>
+  <div class="po-body">
+    <div class="po-hero">
+      <span class="s-label">// Global Footprint</span>
+      <h1>Closer to where<br>it matters.</h1>
+      <p>Three active regions, each with independent power, cooling, and network infrastructure. No region shares a single point of failure with another.</p>
+    </div>
+
+    <table class="po-table">
+      <thead><tr><th>Region</th><th>Code</th><th>Location</th><th>Status</th><th>Latency (EU)</th></tr></thead>
+      <tbody>
+        <tr><td>Europe West</td><td>EU-WEST-2</td><td>Amsterdam, NL</td><td><span class="badge on">Available</span></td><td>~4 ms</td></tr>
+        <tr><td>US East</td><td>US-EAST-1</td><td>Ashburn, VA</td><td><span class="badge on">Available</span></td><td>~82 ms</td></tr>
+        <tr><td>Asia Pacific</td><td>APAC-1</td><td>Singapore</td><td><span class="badge">Waitlisted</span></td><td>~158 ms</td></tr>
+        <tr><td>US West</td><td>US-WEST-1</td><td>Hillsboro, OR</td><td><span class="badge">Planned Q3</span></td><td>~145 ms</td></tr>
+        <tr><td>Europe Central</td><td>EU-CENTRAL-1</td><td>Frankfurt, DE</td><td><span class="badge">Planned Q4</span></td><td>~12 ms</td></tr>
+      </tbody>
+    </table>
+
+    <div class="po-grid">
+      <div class="po-card">
+        <svg class="po-card-ico" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="13" stroke="#52c5f8" stroke-width="1.3"/><path d="M20 7C20 7 14 13 14 20C14 27 20 33 20 33" stroke="rgba(82,197,248,.45)" stroke-width="1" stroke-linecap="round"/><path d="M20 7C20 7 26 13 26 20C26 27 20 33 20 33" stroke="rgba(82,197,248,.45)" stroke-width="1" stroke-linecap="round"/><line x1="7" y1="20" x2="33" y2="20" stroke="rgba(82,197,248,.25)" stroke-width="1"/></svg>
+        <h3>EU-WEST-2 — Amsterdam</h3>
+        <p>Our flagship region. Tier IV data centre, dual power feeds, 100% renewable energy. GDPR-compliant data residency by default. Low latency to Western Europe.</p>
+        <div class="badge-row"><span class="badge on">Live</span><span class="badge on">GDPR</span><span class="badge on">Tier IV</span></div>
+      </div>
+      <div class="po-card">
+        <svg class="po-card-ico" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="13" stroke="#52c5f8" stroke-width="1.3"/><path d="M20 7C20 7 14 13 14 20C14 27 20 33 20 33" stroke="rgba(82,197,248,.45)" stroke-width="1" stroke-linecap="round"/><path d="M20 7C20 7 26 13 26 20C26 27 20 33 20 33" stroke="rgba(82,197,248,.45)" stroke-width="1" stroke-linecap="round"/><line x1="7" y1="20" x2="33" y2="20" stroke="rgba(82,197,248,.25)" stroke-width="1"/></svg>
+        <h3>US-EAST-1 — Ashburn</h3>
+        <p>Located in the world's largest internet exchange hub. Direct peering with over 400 networks. Sub-millisecond connectivity to NYC, DC, and Boston financial corridors.</p>
+        <div class="badge-row"><span class="badge on">Live</span><span class="badge on">SOC 2</span><span class="badge">HIPAA available</span></div>
+      </div>
+      <div class="po-card">
+        <svg class="po-card-ico" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="13" stroke="rgba(82,197,248,.35)" stroke-width="1.3" stroke-dasharray="3 4"/><line x1="7" y1="20" x2="33" y2="20" stroke="rgba(82,197,248,.2)" stroke-width="1"/></svg>
+        <h3>APAC-1 — Singapore</h3>
+        <p>Waitlist open. Primary gateway for Southeast Asia, Australia, and Japan. Carrier-neutral facility with direct IX peering to SGIX and BBIX. ETA Q2.</p>
+        <div class="badge-row"><span class="badge">Waitlisted</span><span class="badge">Q2 ETA</span></div>
+      </div>
+      <div class="po-card">
+        <svg class="po-card-ico" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="13" stroke="rgba(82,197,248,.2)" stroke-width="1.3" stroke-dasharray="2 5"/></svg>
+        <h3>More Regions</h3>
+        <p>US-WEST-1 (Oregon) and EU-CENTRAL-1 (Frankfurt) are under construction. Members are automatically notified when their preferred region opens.</p>
+        <div class="badge-row"><span class="badge">Planned Q3</span><span class="badge">Planned Q4</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PAGE: DOCS ═══ -->
+<div class="page-overlay" id="page-docs">
+  <div class="po-nav">
+    <button class="po-back" onclick="closePage()">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="#52c5f8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back
+    </button>
+    <span class="po-title">// Documentation</span>
+  </div>
+  <div class="po-body">
+    <div class="po-hero">
+      <span class="s-label">// Quickstart · API · Reference</span>
+      <h1>Everything you<br>need to ship.</h1>
+      <p>Documentation written by engineers, for engineers. No fluff, no marketing copy — just the commands and configs you need to go from invite token to running workload.</p>
+    </div>
+
+    <div class="po-grid">
+      <div class="po-card">
+        <svg class="po-card-ico" viewBox="0 0 40 40" fill="none"><path d="M10 8h20v24H10z" stroke="#52c5f8" stroke-width="1.3" stroke-linejoin="round"/><path d="M15 14h10M15 19h10M15 24h6" stroke="#52c5f8" stroke-width="1" stroke-linecap="round" opacity=".5"/></svg>
+        <h3>Quickstart Guide</h3>
+        <p>From invite token to a running SSH session in under 5 minutes. Covers key upload, region selection, OS image choice, and first boot.</p>
+        <span class="tag">~5 min read</span>
+      </div>
+      <div class="po-card">
+        <svg class="po-card-ico" viewBox="0 0 40 40" fill="none"><rect x="8" y="8" width="24" height="24" rx="1" stroke="#52c5f8" stroke-width="1.3"/><path d="M14 18l4 4 8-8" stroke="#52c5f8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" opacity=".6"/></svg>
+        <h3>Control Plane API</h3>
+        <p>RESTful API with full CRUD over nodes, volumes, snapshots, and networking. All endpoints return JSON. Authentication via Bearer token with optional IP allowlisting.</p>
+        <span class="tag">REST · OpenAPI 3.1</span>
+      </div>
+      <div class="po-card">
+        <svg class="po-card-ico" viewBox="0 0 40 40" fill="none"><path d="M8 28L16 12L22 22L27 16L32 28Z" stroke="#52c5f8" stroke-width="1.3" stroke-linejoin="round" fill="rgba(82,197,248,.06)"/></svg>
+        <h3>Networking Reference</h3>
+        <p>Private VLAN setup, BGP peering requests, firewall rule syntax, and IPv6 configuration. Includes worked examples for common architectures.</p>
+        <span class="tag">VLAN · BGP · IPv6</span>
+      </div>
+      <div class="po-card">
+        <svg class="po-card-ico" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="12" stroke="#52c5f8" stroke-width="1.3"/><path d="M20 14v6h6" stroke="#52c5f8" stroke-width="1.3" stroke-linecap="round" opacity=".6"/></svg>
+        <h3>Changelog</h3>
+        <p>Every platform update, API version bump, and hardware configuration change logged chronologically. Signed release notes, no surprises.</p>
+        <span class="tag">Updated weekly</span>
+      </div>
+    </div>
+
+    <div class="po-code">
+<span class="c-cm"># 1. Authenticate with your invite token</span>
+<span class="c-kw">export</span> K2_TOKEN=<span class="c-str">"K2-XXXX-XXXX-XXXX"</span>
+
+<span class="c-cm"># 2. Create a node in EU-WEST-2</span>
+curl -X POST https://api.k2.cloud/v1/nodes \
+  -H <span class="c-str">"Authorization: Bearer $K2_TOKEN"</span> \
+  -H <span class="c-str">"Content-Type: application/json"</span> \
+  -d <span class="c-str">'{"region":"eu-west-2","plan":"summit-entry","os":"ubuntu-24-04","ssh_keys":["your-key-id"]}'</span>
+
+<span class="c-cm"># 3. SSH in once status == "running"  (~45 seconds)</span>
+ssh root@<span class="c-str">&lt;node-ip&gt;</span>
+    </div>
+
+    <table class="po-table">
+      <thead><tr><th>Endpoint</th><th>Method</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>/v1/nodes</td><td>GET · POST</td><td>List all nodes or provision a new one</td></tr>
+        <tr><td>/v1/nodes/:id</td><td>GET · DELETE</td><td>Inspect or terminate a specific node</td></tr>
+        <tr><td>/v1/nodes/:id/reboot</td><td>POST</td><td>Hard or graceful reboot via BMC</td></tr>
+        <tr><td>/v1/volumes</td><td>GET · POST</td><td>Manage NVMe-oF persistent volumes</td></tr>
+        <tr><td>/v1/snapshots</td><td>GET · POST</td><td>Point-in-time volume snapshots</td></tr>
+        <tr><td>/v1/keys</td><td>GET · POST · DELETE</td><td>Manage SSH public keys for your account</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <div class="foot-wrap">
@@ -636,12 +949,29 @@ const VALID_TOKENS = [
 ];
 // ═══════════════════════════════════════════════════════════════
 
+// Page overlay system
+function openPage(id) {
+  const el = document.getElementById('page-' + id);
+  if (!el) return;
+  el.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  el.scrollTop = 0;
+}
+function closePage() {
+  document.querySelectorAll('.page-overlay.open').forEach(el => {
+    el.classList.remove('open');
+  });
+  document.body.style.overflow = '';
+}
+// Close on Escape key
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePage(); });
+
 // Cursor
 const cur=document.getElementById('cur'),ring=document.getElementById('ring');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
 (function loop(){cur.style.left=mx+'px';cur.style.top=my+'px';rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
-document.querySelectorAll('a,button,input').forEach(el=>{
+document.querySelectorAll('a,button,input,.po-back').forEach(el=>{
   el.addEventListener('mouseenter',()=>{ring.style.width='44px';ring.style.height='44px';ring.style.borderColor='rgba(82,197,248,.6)';});
   el.addEventListener('mouseleave',()=>{ring.style.width='30px';ring.style.height='30px';ring.style.borderColor='rgba(82,197,248,.35)';});
 });
